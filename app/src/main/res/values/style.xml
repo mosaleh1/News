@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="bottomRadice" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeBottomRight">25dp</item>
+        <item name="cornerSizeBottomLeft">25dp</item>
+        <item name="android:adjustViewBounds">true</item>
+    </style>
+    <style name="roundedRudis" parent="">
+        <item name="cornerFamily">rounded</item>
+       <item name="cornerSize">15dp</item>
+        <item name="android:adjustViewBounds">true</item>
+    </style>
+
+</resources>

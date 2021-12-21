@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/homeFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_home_24"
+        android:iconTint="@color/black"
+        android:title="Home" />
+    <item
+        android:id="@+id/searchFragment"
+        android:icon="@drawable/search_icon"
+        android:iconTint="@color/black"
+        android:title="search" />
+    <item
+        android:id="@+id/savedNewsFragment"
+        android:icon="@drawable/ic_favorite_24"
+        android:iconTint="@color/black"
+        android:title="Saved" />
+</menu>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_main"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.runcode.news.screens.home.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_savedNewsFragment"
+            app:destination="@id/savedNewsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_newsProfileFragment"
+            app:destination="@id/newsProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.runcode.news.screens.search.SearchFragment"
+        android:label="SearchFragment" >
+        <action
+            android:id="@+id/action_searchFragment_to_newsProfileFragment"
+            app:destination="@id/newsProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/savedNewsFragment"
+        android:name="com.runcode.news.screens.saved.SavedNewsFragment"
+        android:label="fragment_saved_news"
+        tools:layout="@layout/fragment_saved_news" >
+        <action
+            android:id="@+id/action_savedNewsFragment_to_newsProfileFragment"
+            app:destination="@id/newsProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/newsProfileFragment"
+        android:name="com.runcode.news.screens.news_profile.NewsProfileFragment"
+        android:label="fragment_news_profile"
+        tools:layout="@layout/fragment_news_profile" >
+        <argument
+            android:name="breakingNews"
+            app:argType="com.runcode.news.data.model.BreakingNews" />
+    </fragment>
+</navigation>

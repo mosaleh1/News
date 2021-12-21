@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/News/app/src/main/res/drawable/bottom_radice.xml" value="0.19010416666666666" />
+        <entry key="..\:/News/app/src/main/res/drawable/ic_search_24.xml" value="0.19010416666666666" />
+        <entry key="..\:/News/app/src/main/res/drawable/image_background_home.xml" value="0.19010416666666666" />
+        <entry key="..\:/News/app/src/main/res/drawable/image_background_profile.xml" value="0.19010416666666666" />
+        <entry key="..\:/News/app/src/main/res/drawable/image_bakground_home.xml" value="0.19010416666666666" />
+        <entry key="..\:/News/app/src/main/res/drawable/search_edittext_background.xml" value="0.19010416666666666" />
+        <entry key="..\:/News/app/src/main/res/drawable/search_icon.xml" value="0.19010416666666666" />
+        <entry key="..\:/News/app/src/main/res/drawable/text_background.xml" value="0.19010416666666666" />
+        <entry key="..\:/News/app/src/main/res/font/san_fransisco.xml" value="0.20416666666666666" />
+        <entry key="..\:/News/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/News/app/src/main/res/layout/error_page.xml" value="0.14" />
+        <entry key="..\:/News/app/src/main/res/layout/fragment_home.xml" value="0.22" />
+        <entry key="..\:/News/app/src/main/res/layout/fragment_news_profile.xml" value="0.34791666666666665" />
+        <entry key="..\:/News/app/src/main/res/layout/fragment_search.xml" value="0.22" />
+        <entry key="..\:/News/app/src/main/res/layout/image_background_home.xml" value="0.17395833333333333" />
+        <entry key="..\:/News/app/src/main/res/layout/item_news.xml" value="0.67" />
+        <entry key="..\:/News/app/src/main/res/layout/item_news_list.xml" value="0.308300395256917" />
+        <entry key="..\:/News/app/src/main/res/menu/menu.xml" value="0.17395833333333333" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
