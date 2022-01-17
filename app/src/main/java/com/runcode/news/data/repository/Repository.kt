@@ -10,7 +10,8 @@ import com.runcode.news.data.api.NewsApiCall
 import com.runcode.news.data.api.model.BreakingNewsMapper
 import com.runcode.news.data.api.model.HeadlinesMapper
 import com.runcode.news.data.database.HeadlinesDao
-import com.runcode.news.data.database.NewsDao
+import com.runcode.news.data.database.BreakingNewsDao
+import com.runcode.news.data.database.model.BreakingNewsDatabase
 import com.runcode.news.data.database.model.BreakingNewsMapperDatabase
 import com.runcode.news.data.database.model.HeadlinesMapperDatabase
 import com.runcode.news.data.model.BreakingNews
@@ -18,6 +19,9 @@ import com.runcode.news.data.model.BreakingNewsModel
 import com.runcode.news.data.model.Headlines
 import com.runcode.news.data.model.HeadlinesModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
@@ -26,7 +30,7 @@ import javax.inject.Inject
 class Repository @Inject constructor(
     @ApplicationContext val context: Context,
     val api: NewsApiCall,
-    private val breakingNewsDatabase: NewsDao,
+    private val breakingBreakingNewsDatabase: BreakingNewsDao,
     private val headlinesDatabase: HeadlinesDao,
     private val networkMapperHeadlines: HeadlinesMapper,
     private val networkMapperBreakingNews: BreakingNewsMapper,
@@ -55,17 +59,17 @@ class Repository @Inject constructor(
 
     /*home fragment related data <Breaking BreakingNews>*/
     suspend fun getAllNews(): List<BreakingNews> {
-        return databaseMapperBreakingNews.fromListOfEntityToBreakingNewsList(breakingNewsDatabase.getAllNews())
+        return databaseMapperBreakingNews.fromListOfEntityToBreakingNewsList(breakingBreakingNewsDatabase.getAllNews())
     }
 
     suspend fun insertNews(breakingNews: List<BreakingNews>) {
-        return breakingNewsDatabase.insertNews(
+        return breakingBreakingNewsDatabase.insertNews(
             databaseMapperBreakingNews.fromBreakingNewsListToListOfEntity(breakingNews)
         )
     }
 
     suspend fun deleteAll() {
-        return breakingNewsDatabase.deleteAll()
+        return breakingBreakingNewsDatabase.deleteAllBreakingNews()
     }
 
     /*home fragment related data <Headlines>*/
@@ -80,8 +84,9 @@ class Repository @Inject constructor(
     }
 
 
-    suspend fun clearCache() {
+    private suspend fun clearCache() {
         headlinesDatabase.clearCache()
+        breakingBreakingNewsDatabase.deleteAllBreakingNews()
     }
 
     suspend fun getAllHeadlines(): List<Headlines> {
@@ -90,6 +95,9 @@ class Repository @Inject constructor(
 
     private val TAG = "Repository"
 
+
+
+    @DelicateCoroutinesApi
     @RequiresApi(Build.VERSION_CODES.O)
     fun isOldData(): Boolean {
         val pref: SharedPreferences = context.getSharedPreferences("NewsAppShortData", 0)
@@ -99,12 +107,24 @@ class Repository @Inject constructor(
         var date2 = LocalDateTime.from(date)
         date2 = date2.plusHours(2)
         Log.d(TAG, "isOldData: new time  \ndate is $date2")
-        Log.d(TAG, "isOldData: ${date.hour} 1 hour  ${date2.hour}")
-        return date.isAfter(date2)
+        Log.d(TAG, "isOldData: ${date.hour}:${date.minute} hour  ${date2.hour}:${date2.minute}")
+        val isOldData = LocalDateTime.now().isAfter(date2)
+        Log.d(TAG, "isOldData: $isOldData ")
+        if(isOldData){
+            GlobalScope.launch {
+                clearCache()
+            }
+        }
+        return isOldData
     }
 
+    suspend fun notifyIsOldData (){
+        clearCache()
+    }
 
-    private fun insertToSharedPref(local: String) {
+    fun notifyNewsFetched(){
+        Log.d(TAG, "notifyNewsFetched: ")
+        val local = LocalDateTime.now().toString()
         val pref = context.getSharedPreferences("NewsAppShortData", 0)
         val editor = pref.edit()
         editor.putString("time", local)
@@ -119,11 +139,7 @@ class Repository @Inject constructor(
         return value
     }
 
-    fun getOldDateForNews(): String {
-        var date = LocalDateTime.now()
-        date = date.minusDays(3)
-        return DateTimeFormatter.ofPattern("dd-mm-yyyy").format(date).toString()
-    }
+
 
     fun getRequestDate(): String {
         var localDateTime = LocalDateTime.now()
@@ -132,4 +148,16 @@ class Repository @Inject constructor(
         return dateFormatting.format(localDateTime)
     }
 
+    suspend fun saveToFavorite(breakingNews: BreakingNews) {
+        val breakingNEwsDatabase = databaseMapperBreakingNews.fromDomainToEntity(breakingNews)
+        breakingBreakingNewsDatabase.insertToFavorite(breakingNEwsDatabase)
+    }
+    suspend fun deleteFromFavorite(breakingNews: BreakingNews){
+        val breakingNEwsDatabase = databaseMapperBreakingNews.fromDomainToEntity(breakingNews)
+        breakingBreakingNewsDatabase.deleteFromFavorite(breakingNEwsDatabase)
+    }
+
+    suspend fun getAllFavorite():List<BreakingNewsDatabase>{
+       return breakingBreakingNewsDatabase.getAllFavorite()
+    }
 }

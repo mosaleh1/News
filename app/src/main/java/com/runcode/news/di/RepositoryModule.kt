@@ -6,9 +6,12 @@ import com.runcode.news.data.api.NewsApiCall
 import com.runcode.news.data.api.model.BreakingNewsMapper
 import com.runcode.news.data.api.model.HeadlinesMapper
 import com.runcode.news.data.database.HeadlinesDao
-import com.runcode.news.data.database.NewsDao
+import com.runcode.news.data.database.BreakingNewsDao
 import com.runcode.news.data.database.model.BreakingNewsMapperDatabase
 import com.runcode.news.data.database.model.HeadlinesMapperDatabase
+import com.runcode.news.data.repository.CustomSearchRepositoryImpl
+import com.runcode.news.data.repository.NewsListRepositoryImpl
+import com.runcode.news.data.repository.SavedNewsRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,10 +24,25 @@ import dagger.hilt.components.SingletonComponent
 object RepositoryModule {
 
     @Provides
+    fun ProvidesNewsListRepository(
+        api: NewsApiCall,
+        breakingNewsDao: BreakingNewsDao,
+        networkMapperBreakingNews: BreakingNewsMapper,
+        databaseMapperBreakingNews: BreakingNewsMapperDatabase,
+        @ApplicationContext context: Context
+
+    ): NewsListRepositoryImpl {
+        return NewsListRepositoryImpl(
+            breakingNewsDao, api, networkMapperBreakingNews,
+            databaseMapperBreakingNews, context
+        )
+    }
+
+    @Provides
     fun ProvideRepository(
         @ApplicationContext context: Context,
         api: NewsApiCall,
-        newsDao: NewsDao,
+        breakingNewsDao: BreakingNewsDao,
         headlinesDao: HeadlinesDao,
         networkMapperHeadlines: HeadlinesMapper,
         networkMapperBreakingNews: BreakingNewsMapper,
@@ -32,10 +50,34 @@ object RepositoryModule {
         databaseMapperHeadlines: HeadlinesMapperDatabase
     ): Repository {
         return Repository(
-            context, api, newsDao,
+            context, api, breakingNewsDao,
             headlinesDao, networkMapperHeadlines,
             networkMapperBreakingNews,
             databaseMapperBreakingNews, databaseMapperHeadlines
         )
     }
+
+    @Provides
+    fun provideSavedNewsRepository(
+        breakingNewsDao: BreakingNewsDao,
+        databaseMapperBreakingNews: BreakingNewsMapperDatabase,
+        @ApplicationContext context: Context
+    ): SavedNewsRepositoryImpl {
+        return SavedNewsRepositoryImpl(context, breakingNewsDao, databaseMapperBreakingNews)
+    }
+
+    @Provides
+    fun provideCustomSearchRepository(
+        api: NewsApiCall,
+        mapper: BreakingNewsMapper
+    ): CustomSearchRepositoryImpl =
+        CustomSearchRepositoryImpl(api, mapper)
 }
+
+
+
+
+
+
+
+

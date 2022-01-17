@@ -3,6 +3,7 @@ package com.runcode.news.data.database.model
 import com.runcode.news.data.model.BreakingNews
 import com.runcode.news.data.model.Headlines
 import com.runcode.news.util.EntityMapper
+import java.util.*
 import javax.inject.Inject
 
 class HeadlinesMapperDatabase @Inject constructor() : EntityMapper<HeadlinesDatabase, Headlines> {
@@ -24,7 +25,8 @@ class HeadlinesMapperDatabase @Inject constructor() : EntityMapper<HeadlinesData
 
     override fun fromDomainToEntity(domainModel: Headlines): HeadlinesDatabase {
         return HeadlinesDatabase(
-            id = domainModel.id,
+            id = if (domainModel.id.isNotEmpty() || domainModel.id !="null") domainModel.id else
+                Random(10000).nextInt().toString(),
             name = domainModel.name,
             author = domainModel.author,
             title = domainModel.title,
@@ -39,7 +41,6 @@ class HeadlinesMapperDatabase @Inject constructor() : EntityMapper<HeadlinesData
     fun fromListOfEntityToHeadlinesList(entities: List<HeadlinesDatabase>): List<Headlines> {
         return entities.map { fromEntityToDomain(it) }
     }
-
 
     fun fromHeadlinesListToListOfEntity(entities: List<Headlines>): List<HeadlinesDatabase> {
         return entities.map { fromDomainToEntity(it) }

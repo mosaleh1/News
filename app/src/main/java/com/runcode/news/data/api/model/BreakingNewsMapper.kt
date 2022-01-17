@@ -57,4 +57,5 @@ class BreakingNewsMapper : EntityMapper<BreakingNewsNetworkEntity, BreakingNewsM
     fun mapFromListOfBreakingNewsToArticle(breakingNews: List<BreakingNews>): List<Article> {
         return breakingNews.map { mapFromDomainModelToEntity(it) }
     }
+
 }

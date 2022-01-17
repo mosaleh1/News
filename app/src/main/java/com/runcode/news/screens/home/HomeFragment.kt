@@ -23,6 +23,7 @@ import com.runcode.news.data.model.intents.HomeIntent
 import com.runcode.news.data.model.states.HomeStates
 import com.runcode.news.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
@@ -32,7 +33,7 @@ private const val TAG = "HomeFragment"
 
 @AndroidEntryPoint
 @InternalCoroutinesApi
-class HomeFragment : Fragment(), NewsAdapter.OnNewsItemListener {
+class HomeFragment : Fragment(), NewsAdapter.OnNewsItemListener , NewsAdapter.OnFavIconListener{
 //    private var _binding: FragmentHomeBinding? = null
 //    private val binding: FragmentHomeBinding
 //        get() = _binding!!
@@ -59,6 +60,7 @@ class HomeFragment : Fragment(), NewsAdapter.OnNewsItemListener {
         // _binding = FragmentHomeBinding.bind(view)
 
         adapter.clickListener = this@HomeFragment
+        adapter.saveToFavClickListener = this
 
         setUpDataToHeadline(binding)
 
@@ -82,7 +84,7 @@ class HomeFragment : Fragment(), NewsAdapter.OnNewsItemListener {
                     }
 
                     is HomeStates.Success -> {
-                        Log.d(TAG, "setUpDataToHeadline: Success")
+                        Log.d(TAG, "setUpDataToHeadline: Success ${it.news.size}")
                         val handler = Handler(Looper.getMainLooper())
                         displayDataToHeadlines(it.news as List<Headlines>, binding)
                         var runnable: Runnable? = null
@@ -172,6 +174,7 @@ class HomeFragment : Fragment(), NewsAdapter.OnNewsItemListener {
         Log.d(TAG, "onViewCreated: ${news.size}")
         adapter = NewsAdapter(requireContext(), news)
         adapter.clickListener = this
+        adapter.saveToFavClickListener = this
         binding.listHome.adapter = adapter
     }
 
@@ -188,5 +191,19 @@ class HomeFragment : Fragment(), NewsAdapter.OnNewsItemListener {
         findNavController().navigate(
             HomeFragmentDirections.actionHomeFragmentToNewsProfileFragment(breakingNews)
         )
+    }
+
+    override fun onFavIconClickedListener(breakingNews: BreakingNews, isFave :Boolean) {
+        if (isFave){
+            viewModel.saveToFavorite(breakingNews)
+        }else{
+            viewModel.deleteFromFavorite(breakingNews)
+        }
+
+    }
+
+    override fun onPause() {
+        super.onPause()
+        //viewModel.saveAll(adapter.data)
     }
 }

@@ -7,4 +7,6 @@ object Constants {
     const val BASE_URL = "https://newsapi.org/"
 
     const val SHARED_PREF_NAME = "NewsAppShortData"
+
+    const val TIME_PREF_ID = "time"
 }

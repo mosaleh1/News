@@ -5,9 +5,8 @@ import androidx.room.Room
 import com.runcode.news.data.Constants
 import com.runcode.news.data.api.NewsApiCall
 import com.runcode.news.data.database.HeadlinesDao
-import com.runcode.news.data.database.NewsDao
+import com.runcode.news.data.database.BreakingNewsDao
 import com.runcode.news.data.database.NewsDatabase
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -59,7 +58,7 @@ object AppScopedModule {
     fun provideHomeBreakingDao(
         @ApplicationContext context: Context,
         db: NewsDatabase
-    ): NewsDao {
+    ): BreakingNewsDao {
         return db.newsDao()
     }
 

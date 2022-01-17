@@ -1,5 +1,6 @@
 package com.runcode.news.screens.news_profile
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -33,6 +34,7 @@ class NewsProfileFragment : Fragment() {
     }
 
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewBinding = FragmentNewsProfileBinding.bind(view)
@@ -50,9 +52,9 @@ class NewsProfileFragment : Fragment() {
         }
 
         viewBinding.apply {
-            textContent.text = news.description
+            textContent.text =" ${news.description}\n${news.content}"
             titleProfile.text = news.title
-            subTitleProfile.text = news.content
+            subTitleProfile.text = news.description
             titleProfileSecond.text = news.title
         }
         var isShow = true
@@ -75,7 +77,7 @@ class NewsProfileFragment : Fragment() {
         viewBinding.visitWebSite.setOnClickListener {
             val websiteIntent = Intent()
             websiteIntent.action = Intent.ACTION_VIEW
-            websiteIntent.data = Uri.parse(news.articleUrl?:"https//:www.google.com/")
+            websiteIntent.data = Uri.parse(news.articleUrl)
             startActivity(websiteIntent)
         }
     }

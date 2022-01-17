@@ -14,5 +14,7 @@ data class BreakingNews (
     val content: String,
     val publishedAt: String,
     val urlToImage: String,
-    val articleUrl: String
+    val articleUrl: String,
+    val topic:String="BreakingNews",
+    var isFavorite:Boolean = false
 ) : News(),Parcelable

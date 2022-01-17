@@ -20,17 +20,7 @@ data class BreakingNewsDatabase(
     val urlToImage: String?,
     @PrimaryKey
     @NotNull
-    val articleUrl: String
+    val articleUrl: String,
+    val topic: String = "BreakingNews",
+    var isFavorite:Boolean= false
 ) : Parcelable
-
-//val id: Int,
-//val name: String?,
-//val author: String?,
-//val title: String?,
-//val description: String?,
-//val content: String?,
-//val publishedAt: String?,
-//val urlToImage: String?,
-//@PrimaryKey
-//@SerializedName("url")
-//val articleUrl: String =""

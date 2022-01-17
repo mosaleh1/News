@@ -17,5 +17,5 @@ data class HeadlinesDatabase(
     val urlToImage: String,
     @PrimaryKey
     @NotNull
-    val articleUrl: String
+    val articleUrl: String = ""
 )

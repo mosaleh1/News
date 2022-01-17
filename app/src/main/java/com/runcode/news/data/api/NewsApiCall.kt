@@ -29,8 +29,9 @@ interface NewsApiCall {
         @Query("q") topic: String,
         @Query("apiKey") apiKey: String = Constants.API_KEY,
         @Query("language") lang: String = "en",
-        @Query("from") date: String = "3-12-2021"
+        @Query("from") date: String = LocalDateTime.now().toString()
     ): BreakingNewsNetworkEntity
+
 
 
 }

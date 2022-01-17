@@ -96,10 +96,10 @@
                     android:id="@+id/learnMore"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="LearnMore"
+                    android:text="Learn more"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:textColor="@color/white"
-                    android:visibility="invisible"
+                    android:visibility="visible"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/text_title_home"
                     app:layout_constraintTop_toBottomOf="@+id/text_title_home" />

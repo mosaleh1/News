@@ -2,6 +2,7 @@ package com.runcode.news.data.database
 
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.runcode.news.data.database.model.HeadlinesDatabase
 import com.runcode.news.data.model.Headlines

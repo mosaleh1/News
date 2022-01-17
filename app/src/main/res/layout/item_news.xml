@@ -6,6 +6,8 @@
     android:layout_height="wrap_content"
     android:padding="12dp">
 
+
+
     <androidx.cardview.widget.CardView
         android:id="@+id/card"
         android:layout_width="250dp"
@@ -22,7 +24,18 @@
             android:scaleType="centerCrop"
             android:src="@drawable/biden" />
 
+        <ImageView
+            android:id="@+id/save_to_fav_icon_home"
+            android:layout_width="24dp"
+            android:layout_height="30dp"
+            android:layout_gravity="end|top"
+            android:layout_margin="16dp"
+            android:contentDescription="@string/save_icon"
+            android:src="@drawable/save_to_fav_icon" />
+
+
     </androidx.cardview.widget.CardView>
+
 
     <TextView
         android:id="@+id/news_item_title"
@@ -37,6 +50,8 @@
         app:layout_constraintStart_toStartOf="@+id/card"
         app:layout_constraintTop_toBottomOf="@id/card"
         tools:text="Candidate Biden Called Saudi Arabia a 'Pariah'" />
+
+
 
     <TextView
         android:id="@+id/author_item"

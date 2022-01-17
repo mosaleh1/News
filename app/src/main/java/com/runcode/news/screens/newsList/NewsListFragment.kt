@@ -13,6 +13,7 @@ import com.runcode.news.databinding.FragmentNewsListBinding
 
 import com.runcode.news.data.model.BreakingNews
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.DelicateCoroutinesApi
 
 
 private const val TAG = "NewsListFragment"
@@ -21,7 +22,7 @@ private const val TAG = "NewsListFragment"
 open class NewsListFragment(private val topic: String) : Fragment() {
     constructor() : this("")
 
-    val viewModel:NewsListViewModel by viewModels()
+    private val viewModel:NewsListViewModel by viewModels()
 
     lateinit var adapter: NewsListAdapter
     override fun onCreateView(
